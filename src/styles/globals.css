@@ -1,0 +1,45 @@
+@import "./variables.css";
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  section {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+  }
+
+  h1 {
+    @apply font-bold tracking-tight text-lg md:text-lg lg:text-xl;
+  }
+
+  h2 {
+    @apply font-semibold tracking-tight text-sm md:text-lg lg:text-lg;
+  }
+
+  a {
+    @apply text-foreground hover:opacity-70 transition duration-300 text-base;
+  }
+}
+
+li {
+  @apply cursor-pointer flex justify-center items-center;
+}
