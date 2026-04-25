@@ -14,6 +14,7 @@ import {
 import type { Location } from "@/src/state/redux/slices/locationSlice";
 import { useDebounce } from "@/src/hooks/useDebounce";
 import { CiLocationOn } from "react-icons/ci";
+import { IoMdSearch } from "react-icons/io";
 export default function SearchBar() {
   const dispatch = useDispatch();
   const { query, results, isLoading, error } = useSelector(
@@ -86,31 +87,18 @@ export default function SearchBar() {
       className="absolute w-full max-w-md z-50 pt-4 px-4  left-[5%]"
       ref={dropdownRef}
     >
-      <div className="flex items-center bg-background border border-gray-300 rounded-3xl shadow-md px-4 py-3 gap-2">
+      <div className="flex items-center bg-background border border-border rounded-3xl shadow-md px-4 py-3 gap-2">
         <input
           type="text"
           value={query}
           onChange={(e) => dispatch(setQuery(e.target.value))}
           placeholder="Search Barikoi Maps"
-          className="flex-1 outline-none text-sm text-gray-700 placeholder-gray-400 bg-transparent"
+          className="flex-1 outline-none text-sm text-text placeholder-muted bg-transparent"
         />
-
-        <svg
-          className="w-5 h-5 text-gray-400 shrink-0"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
-          />
-        </svg>
+        <IoMdSearch className="size-6 text-muted shrink-0" />
         {isLoading && (
           <svg
-            className="w-4 h-4 animate-spin text-blue-500"
+            className="w-4 h-4 animate-spin text-muted "
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -134,20 +122,18 @@ export default function SearchBar() {
       {error && <p className="mt-1 text-xs text-red-500 px-1">{error}</p>}
 
       {results.length > 0 && (
-        <ul className="relative z-50 mt-1 w-full bg-background border border-gray-200 rounded-xl shadow-lg max-h-140 overflow-y-auto">
+        <ul className="relative z-50 mt-1 w-full bg-background border border-border rounded-xl shadow-lg max-h-140 overflow-y-auto">
           {results.map((place) => (
             <li
               key={place.id}
               onClick={() => dispatch(setSelectedLocation(place))}
-              className="flex items-start! justify-start! gap-3 px-4 py-3 hover:bg-blue-50 cursor-pointer transition-colors  border-b border-gray-200 "
+              className="flex items-start! justify-start! gap-3 px-4 py-3 hover:bg-muted/15 cursor-pointer transition-colors  border-b border-border "
             >
-              <CiLocationOn className="size-7 mt-0.5 text-blue-500 shrink-0 " />
+              <CiLocationOn className="size-7 mt-0.5 text-muted shrink-0 " />
 
               <div>
-                <p className="text-sm font-medium text-gray-800">
-                  {place.address}
-                </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-sm font-medium text-text">{place.address}</p>
+                <p className="text-xs text-text/80">
                   {place.area}
                   {place.city ? `, ${place.city}` : ""}
                 </p>
