@@ -11,7 +11,7 @@ export default function LocationCard() {
   if (!selected) return null;
 
   return (
-    <div className="bg-white rounded-xl shadow-md border border-gray-100 px-5 py-4 w-full max-w-xl">
+    <div className=" rounded-xl shadow-md border border-gray-100 px-5 py-4 w-full max-w-md bg-red-500!">
       <div className="flex items-center gap-2 mb-2">
         <svg
           className="w-5 h-5 text-blue-500"
