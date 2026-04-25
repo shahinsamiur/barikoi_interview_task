@@ -18,7 +18,14 @@ export default function SearchBar() {
   const { query, results, isLoading, error } = useSelector(
     (state: RootState) => state.location,
   );
-
+  interface BarikoiPlace {
+    id: number;
+    address: string;
+    area?: string;
+    city?: string;
+    latitude: string;
+    longitude: string;
+  }
   const debouncedQuery = useDebounce(query, 400);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +45,7 @@ export default function SearchBar() {
         const data = await res.json();
 
         if (data?.places) {
-          const mapped: Location[] = data.places.map((p: any) => ({
+          const mapped: Location[] = data.places.map((p: BarikoiPlace) => ({
             id: p.id,
             address: p.address,
             area: p.area ?? "",
