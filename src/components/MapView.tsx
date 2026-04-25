@@ -7,7 +7,7 @@ import Map, { Marker, NavigationControl, MapRef } from "react-bkoi-gl";
 import "react-bkoi-gl/styles";
 
 const DEFAULT_CENTER = { longitude: 90.3938, latitude: 23.8223 };
-const DEFAULT_ZOOM = 12;
+const DEFAULT_ZOOM = 14;
 
 export default function MapView() {
   const selected = useSelector(
@@ -41,13 +41,13 @@ export default function MapView() {
         }}
         style={{ width: "100%", height: "100%" }}
       >
-        <NavigationControl position="top-right" />
+        <NavigationControl position="bottom-right" />
 
         {selected && (
           <Marker
             longitude={selected.longitude}
             latitude={selected.latitude}
-            anchor="bottom"
+            anchor="top-left"
           >
             <div className="flex flex-col items-center">
               <div className="bg-blue-600 text-white text-xs px-2 py-1 rounded-lg shadow mb-1 max-w-37.5 truncate">
