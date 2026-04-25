@@ -10,10 +10,9 @@ import {
   setLoading,
   setError,
   clearResults,
-  Location,
 } from "@/src/state/redux/slices/locationSlice";
+import type { Location } from "@/src/state/redux/slices/locationSlice";
 import { useDebounce } from "@/src/hooks/useDebounce";
-
 export default function SearchBar() {
   const dispatch = useDispatch();
   const { query, results, isLoading, error } = useSelector(
@@ -51,8 +50,9 @@ export default function SearchBar() {
         } else {
           dispatch(setResults([]));
         }
-      } catch (err) {
+      } catch (err: unknown) {
         dispatch(setError("Failed to fetch results"));
+        console.log(err);
       }
     };
 

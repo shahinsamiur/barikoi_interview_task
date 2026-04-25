@@ -3,17 +3,17 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/state/redux/store";
 import { useEffect, useRef } from "react";
-import Map, { Marker, NavigationControl } from "react-bkoi-gl";
+import Map, { Marker, NavigationControl, MapRef } from "react-bkoi-gl";
 import "react-bkoi-gl/styles";
 
-const DEFAULT_CENTER = { longitude: 90.3938, latitude: 23.8223 }; // Dhaka
+const DEFAULT_CENTER = { longitude: 90.3938, latitude: 23.8223 };
 const DEFAULT_ZOOM = 12;
 
 export default function MapView() {
   const selected = useSelector(
     (state: RootState) => state.location.selectedLocation,
   );
-  const mapRef = useRef<any>(null);
+  const mapRef = useRef<MapRef>(null);
 
   const center = selected
     ? { longitude: selected.longitude, latitude: selected.latitude }
