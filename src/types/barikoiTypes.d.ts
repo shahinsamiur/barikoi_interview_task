@@ -18,8 +18,21 @@ export interface Location {
 
 export interface LocationState {
   query: string;
+  activeCategory: POICategory;
+  poiResults: POIPlace[];
+  poiLoading: boolean;
+  mapCenter: { latitude: number; longitude: number };
+  poiResults: POIPlace[];
   results: Location[];
   selectedLocation: Location | null;
   isLoading: boolean;
   error: string | null;
+}
+export interface POIPlace {
+  id: number;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  ucode?: string;
 }
