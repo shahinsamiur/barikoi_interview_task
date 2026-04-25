@@ -6,11 +6,6 @@
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --color-card: var(--card);
-  --color-primary: var(--primary);
-  --color-success: var(--success);
-  --color-danger: var(--danger);
-  --color-warning: var(--warning);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
 }
