@@ -1,7 +1,6 @@
 "use client";
 import { store } from "@/src/state/redux/store";
 import { Provider } from "react-redux";
-import { CounterProvider } from "@/src/state/context/CounterContext";
 export default function StateWraper({
   children,
 }: {
@@ -9,9 +8,7 @@ export default function StateWraper({
 }) {
   return (
     <div>
-      <Provider store={store}>
-        <CounterProvider>{children}</CounterProvider>
-      </Provider>
+      <Provider store={store}>{children}</Provider>
     </div>
   );
 }
