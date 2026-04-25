@@ -1,74 +1,18 @@
 "use client";
-
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/src/state/redux/store";
-import {
-  setQuery,
-  setResults,
-  setSelectedLocation,
-  setLoading,
-  setError,
-  clearResults,
-} from "@/src/state/redux/slices/locationSlice";
-import type { Location } from "@/src/state/redux/slices/locationSlice";
-import { useDebounce } from "@/src/hooks/useDebounce";
+import { useRef, useEffect } from "react";
 import { CiLocationOn } from "react-icons/ci";
 import { IoMdSearch } from "react-icons/io";
+import {
+  setQuery,
+  setSelectedLocation,
+  clearResults,
+} from "@/src/state/redux/slices/locationSlice";
+import { useSearchBar } from "@/src/hooks/useSearchBar";
+
 export default function SearchBar() {
-  const dispatch = useDispatch();
-  const { query, results, isLoading, error } = useSelector(
-    (state: RootState) => state.location,
-  );
-  interface BarikoiPlace {
-    id: number;
-    address: string;
-    area?: string;
-    city?: string;
-    latitude: string;
-    longitude: string;
-  }
-  const debouncedQuery = useDebounce(query, 400);
+  const { query, results, isLoading, error, dispatch } = useSearchBar();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!debouncedQuery || debouncedQuery.length < 3) {
-      dispatch(clearResults());
-      return;
-    }
-
-    const fetchResults = async () => {
-      dispatch(setLoading(true));
-      try {
-        const apiKey = process.env.NEXT_PUBLIC_BARIKOI_API_KEY;
-        const res = await fetch(
-          `https://barikoi.xyz/v1/api/search/autocomplete/${apiKey}/place?q=${encodeURIComponent(debouncedQuery)}`,
-        );
-        const data = await res.json();
-
-        if (data?.places) {
-          const mapped: Location[] = data.places.map((p: BarikoiPlace) => ({
-            id: p.id,
-            address: p.address,
-            area: p.area ?? "",
-            city: p.city ?? "",
-            latitude: parseFloat(p.latitude),
-            longitude: parseFloat(p.longitude),
-          }));
-          dispatch(setResults(mapped));
-        } else {
-          dispatch(setResults([]));
-        }
-      } catch (err: unknown) {
-        dispatch(setError("Failed to fetch results"));
-        console.log(err);
-      }
-    };
-
-    fetchResults();
-  }, [debouncedQuery, dispatch]);
-
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -84,7 +28,7 @@ export default function SearchBar() {
 
   return (
     <div
-      className="absolute w-full max-w-md z-50 pt-4 px-4  left-[5%]"
+      className="absolute w-full max-w-md z-50 pt-4 px-4 left-[5%]"
       ref={dropdownRef}
     >
       <div className="flex items-center bg-background border border-border rounded-3xl shadow-md px-4 py-3 gap-2">
@@ -97,25 +41,7 @@ export default function SearchBar() {
         />
         <IoMdSearch className="size-6 text-muted shrink-0" />
         {isLoading && (
-          <svg
-            className="w-4 h-4 animate-spin text-muted "
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8v8H4z"
-            />
-          </svg>
+          <div className="w-4 h-4 animate-spin border-2 border-muted border-t-transparent rounded-full" />
         )}
       </div>
 
@@ -127,10 +53,9 @@ export default function SearchBar() {
             <li
               key={place.id}
               onClick={() => dispatch(setSelectedLocation(place))}
-              className="flex items-start! justify-start! gap-3 px-4 py-3 hover:bg-muted/15 cursor-pointer transition-colors  border-b border-border "
+              className="flex items-start gap-3 px-4 py-3 hover:bg-muted/15 cursor-pointer transition-colors border-b border-border last:border-0"
             >
-              <CiLocationOn className="size-7 mt-0.5 text-muted shrink-0 " />
-
+              <CiLocationOn className="size-7 mt-0.5 text-muted shrink-0" />
               <div>
                 <p className="text-sm font-medium text-text">{place.address}</p>
                 <p className="text-xs text-text/80">

@@ -1,22 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface Location {
-  id: number;
-  address: string;
-  area: string;
-  city: string;
-  latitude: number;
-  longitude: number;
-}
-
-interface LocationState {
-  query: string;
-  results: Location[];
-  selectedLocation: Location | null;
-  isLoading: boolean;
-  error: string | null;
-}
-
+import { LocationState, Location } from "@/src/types/index";
 const initialState: LocationState = {
   query: "",
   results: [],
