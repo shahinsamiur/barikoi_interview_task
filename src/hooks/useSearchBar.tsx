@@ -29,9 +29,8 @@ export function useSearchBar() {
     const fetchResults = async () => {
       dispatch(setLoading(true));
       try {
-        const apiKey = process.env.NEXT_PUBLIC_BARIKOI_API_KEY;
         const res = await fetch(
-          `https://barikoi.xyz/v1/api/search/autocomplete/${apiKey}/place?q=${encodeURIComponent(debouncedQuery)}`,
+          `/api/search?q=${encodeURIComponent(debouncedQuery)}`,
         );
         const data = await res.json();
 

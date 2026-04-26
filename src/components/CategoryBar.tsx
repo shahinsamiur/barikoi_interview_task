@@ -39,7 +39,7 @@ export default function CategoryBar() {
       const { latitude, longitude } = mapCenter;
 
       const res = await fetch(
-        `https://barikoi.xyz/v1/api/search/nearby/${apiKey}/place?longitude=${longitude}&latitude=${latitude}&distance=500&type=${value}&limit=20`,
+        `https://maps.barikoi.com/api/nearby?latitude=${latitude}&longitude=${longitude}&radius=5&limit=20&categories=${value}&api_key=${apiKey}`,
       );
       const data = await res.json();
 

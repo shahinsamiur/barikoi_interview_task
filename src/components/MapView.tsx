@@ -1,11 +1,10 @@
 "use client";
-
+import dynamic from "next/dynamic";
 import { useSelector } from "react-redux";
 import { RootState } from "@/src/state/redux/store";
 import { useEffect, useRef } from "react";
-import Map, { Marker, NavigationControl, MapRef } from "react-bkoi-gl";
-import "react-bkoi-gl/styles";
-
+import { Marker, NavigationControl, MapRef } from "react-bkoi-gl";
+const Map = dynamic(() => import("react-bkoi-gl"), { ssr: false });
 const DEFAULT_CENTER = { longitude: 90.3938, latitude: 23.8223 };
 const DEFAULT_ZOOM = 14;
 
@@ -33,7 +32,7 @@ export default function MapView() {
     <div className="w-full h-full rounded-xl overflow-hidden shadow-md">
       <Map
         ref={mapRef}
-        mapStyle={`https://map.barikoi.com/styles/osm-liberty/style.json?key=${process.env.NEXT_PUBLIC_BARIKOI_API_KEY}`}
+        mapStyle="/api/map/style"
         initialViewState={{
           longitude: center.longitude,
           latitude: center.latitude,
