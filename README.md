@@ -2,6 +2,8 @@
 
 A Location Finder web application built with Next.js as part of the Barikoi Frontend Engineer assignment.
 
+### Live: [https://barikoi-interview-task.vercel.app/](https://barikoi-interview-task.vercel.app/)
+
 ---
 
 ## Features
