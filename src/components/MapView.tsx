@@ -4,7 +4,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/src/state/redux/store";
 import { useEffect, useRef } from "react";
 import { Marker, NavigationControl, MapRef } from "react-bkoi-gl";
+
 const Map = dynamic(() => import("react-bkoi-gl"), { ssr: false });
+
 const DEFAULT_CENTER = { longitude: 90.3938, latitude: 23.8223 };
 const DEFAULT_ZOOM = 14;
 
@@ -12,7 +14,8 @@ export default function MapView() {
   const selected = useSelector(
     (state: RootState) => state.location.selectedLocation,
   );
-  const mapRef = useRef<MapRef>(null);
+
+  const mapRef = useRef<MapRef | null>(null);
 
   const center = selected
     ? { longitude: selected.longitude, latitude: selected.latitude }
@@ -32,7 +35,8 @@ export default function MapView() {
     <div className="w-full h-full rounded-xl overflow-hidden shadow-md">
       <Map
         ref={mapRef}
-        mapStyle="/api/map/style"
+        // ✅ FIX: use Barikoi style directly (NO proxy)
+        mapStyle={`https://map.barikoi.com/styles/osm-liberty/style.json?key=${process.env.NEXT_PUBLIC_BARIKOI_API_KEY}`}
         initialViewState={{
           longitude: center.longitude,
           latitude: center.latitude,
@@ -46,12 +50,13 @@ export default function MapView() {
           <Marker
             longitude={selected.longitude}
             latitude={selected.latitude}
-            anchor="top-left"
+            anchor="bottom"
           >
             <div className="flex flex-col items-center">
               <div className="bg-blue-600 text-white text-xs px-2 py-1 rounded-lg shadow mb-1 max-w-37.5 truncate">
                 {selected.address}
               </div>
+
               <svg
                 className="w-6 h-6 text-blue-600 drop-shadow"
                 fill="currentColor"

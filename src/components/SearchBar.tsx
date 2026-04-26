@@ -8,15 +8,7 @@ import {
   clearResults,
 } from "@/src/state/redux/slices/locationSlice";
 import { useSearchBar } from "@/src/hooks/useSearchBar";
-// import {
-//   setPOIResults,
-//   setActiveCategory,
-//   setMapCenter,
-// } from "@/src/state/redux/slices/locationSlice";
-
 import "react-bkoi-gl/styles";
-// import { useDispatch } from "react-redux";
-import CategoryBar from "./CategoryBar";
 export default function SearchBar() {
   const { query, results, isLoading, error, dispatch } = useSearchBar();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -53,18 +45,17 @@ export default function SearchBar() {
             <div className="w-4 h-4 animate-spin border-2 border-muted border-t-transparent rounded-full" />
           )}
         </div>
-        <CategoryBar />
       </div>
 
       {error && <p className="mt-1 text-xs text-red-500 px-1">{error}</p>}
 
       {results.length > 0 && (
-        <ul className="relative z-50 mt-1 w-md bg-background border border-border rounded-xl shadow-lg max-h-140 overflow-y-auto">
+        <ul className="relative flex flex-col  justify-start! items-start! z-50 mt-1 w-md bg-background border border-border rounded-xl shadow-lg max-h-140 overflow-y-auto">
           {results.map((place) => (
             <li
               key={place.id}
               onClick={() => dispatch(setSelectedLocation(place))}
-              className="flex items-start gap-3 px-4 py-3 hover:bg-muted/15 cursor-pointer transition-colors border-b border-border last:border-0"
+              className="flex items-center! justify-start! w-full gap-3 px-4 py-3 hover:bg-muted/15 cursor-pointer transition-colors border-b border-border last:border-0"
             >
               <CiLocationOn className="size-7 mt-0.5 text-muted shrink-0" />
               <div>
